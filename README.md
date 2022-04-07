@@ -2,9 +2,9 @@
 Langton's Ant Coding Exercise!
 
 Please check out the LangtonsAnt project for the C++ solution
-  files:  LangtonsAnt.cpp
-          AntPosition.h
-          AntPosition.cpp
+  files:  LangtonsAnt.cpp |
+          AntPosition.h |
+          AntPosition.cpp |
           
 If interested, you may also check out LangtonsAntCSharp for an alternative solution to the problem. 
 In this version of the project, I wrote data to a json file and also wrote a web page with jQuery/javascript to read the json and output a canvas.
