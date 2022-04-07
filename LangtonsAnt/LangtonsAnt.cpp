@@ -8,7 +8,6 @@
 
 #include <iostream>
 #include <vector>
-#include "Square.h"
 #include "AntPosition.h"
 using namespace std;
 
@@ -53,8 +52,6 @@ int main() {
 	int min_y = 0;
 	int max_x = 0;
 	int max_y = 0;
-
-	vector<Square> grid;
 
 	for (int i = 0;  i < k_moves; i++)
 	{
