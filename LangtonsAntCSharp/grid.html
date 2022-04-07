@@ -1,0 +1,83 @@
+<!doctype html>
+<html>
+<head>
+	<title>Langton's Ant</title>
+	<style>
+		#grid {
+			border:5px solid #000000;
+		}
+	</style>
+	<script src="https://code.jquery.com/jquery-3.5.0.js"></script>
+</head>
+<body>
+	<h1>Langton's Ant</h1>
+	<h2></h2>
+	<h3></h3>
+	<center>
+		<canvas id="grid" width=1510 height=1510 />
+	</center>
+	<script type="text/javascript">
+		var width = 10;
+		var height = 10;
+		var canvas = document.getElementById("grid");
+		var context = canvas.getContext("2d");
+		
+		context.beginPath();
+		for(var i=10; i<1510; i=i+10)
+		{
+			//vertical
+			context.moveTo(i,0);
+			context.lineTo(i,1510);
+			
+			//horizontal
+			context.moveTo(0,i);
+			context.lineTo(1510,i);
+			
+			context.strokeStyle="#808080";
+			context.lineWidth=1;
+			context.stroke();
+		}
+		
+		var firstX = 0;
+		var firstY = 0;
+		var firstColor = "white";
+		var lastX = 0; 
+		var lastY = 0;
+		var lastColor = "";
+		var lastIndex = 0;
+
+		$.getJSON( "data.json" )
+			.done(function( data ) {
+				console.log('done...');
+				$.each( data, function( i, item ) {			
+					console.log(i + ") coordinates: " +  item.X + ", " + item.Y + " | " + item.IsWhite);
+					if (item.X == 0 && item.Y == 0)
+						firstColor = item.IsWhite == true ? "white" : "black";
+
+					context.fillStyle =  item.IsWhite == true ? "white" : "black";
+
+					context.fillRect(750 + item.X*10, 750 - item.Y*10, width, height);
+
+					lastColor = item.IsWhite == true ? "white" : "black";
+					lastX = item.X;
+					lastY = item.Y;
+					lastIndex = i;
+				})
+			}).then(function(){
+				context.fillStyle = "#00ff00";
+				context.fillRect(750 + firstX*10, 750 - firstY*10, width, height);
+
+				context.fillStyle = "#ff0000";
+				context.fillRect(750 + lastX*10, 750 - lastY*10, width, height);
+
+				$('h3').html("Starting square (0, 0) shown in green. Square color is " + firstColor + ".<br/>");
+				$('h3').append("Ending square (" + lastX + ", " + lastY + ") shown in red. Square color is " + lastColor + ".<br/>");
+			});
+
+		$.get('moves.txt', function(data) {
+			$('h2').html(data).append(" moves");			
+		});
+
+	</script>
+</body>
+</html>
